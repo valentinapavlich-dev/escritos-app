@@ -168,8 +168,18 @@ export default function CaseForm({ initialData, onGenerate, onBack }) {
         </div>
 
         <div className="form-section">
-          <h3>Escritos de referencia del estudio (opcional)</h3>
-          <p className="text-muted">Sube escritos previos del estudio para que la IA aprenda el estilo específico.</p>
+          <h3>Escritos de referencia adicionales (opcional)</h3>
+          <div className="drive-hint">
+            <span className="drive-badge">✓ Drive conectado</span>
+            <p className="text-muted">
+              El estilo del estudio ya está incorporado (4 ejemplos reales de tu Drive: trámite, evacuación, reposición y demanda ejecutiva).
+              Puedes subir escritos adicionales de tu{' '}
+              <a href="https://drive.google.com/drive/folders/1hyRc40JlSd9137TiAjON7dBvGhohV91p" target="_blank" rel="noopener noreferrer">
+                carpeta Escritos en Drive
+              </a>{' '}
+              para afinar aún más el estilo.
+            </p>
+          </div>
           <input
             ref={refInputRef}
             type="file"
@@ -179,7 +189,7 @@ export default function CaseForm({ initialData, onGenerate, onBack }) {
             style={{ display: 'none' }}
           />
           <button type="button" className="btn-secondary" onClick={() => refInputRef.current.click()} disabled={loadingRef}>
-            {loadingRef ? 'Cargando...' : '+ Agregar escritos de referencia (DOCX/TXT)'}
+            {loadingRef ? 'Cargando...' : '+ Subir escritos adicionales (DOCX/TXT)'}
           </button>
           {refFiles.length > 0 && (
             <div className="ref-files">

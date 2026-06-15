@@ -106,6 +106,82 @@ app.post('/api/generate', async (req, res) => {
 
   const nombreAbogado = abogados[abogado] || abogado;
 
+  // Ejemplos reales del estudio, leídos desde Google Drive
+  const ejemplosReales = `
+=== EJEMPLO 1: TRÁMITE (Curso progresivo) ===
+Curso progresivo a los autos.
+
+S. J. L. en lo Civil de Santiago (12°)
+
+Jorge Barahona Sotelo, en representación del Banco de Chile, en los autos caratulados "Banco de Chile con Cartagena", causa rol C-10804-2025 a S.S. respetuosamente digo:
+
+Que, no habiéndose evacuado el traslado conferido con fecha 15 de mayo de 2026 por la ejecutada, solicito a S.S. dar curso progresivo a los autos, y se resuelva la presentación de fecha 20 de febrero de 2026, a folio 4.
+
+Por tanto,
+
+Solicito a S.S.: Dar curso progresivo a los autos.
+
+=== EJEMPLO 2: EVACÚA TRASLADO DE EXCEPCIONES (estructura completa) ===
+Evacua traslado excepciones.
+
+S. J. L. en lo Civil de Buin (1º)
+
+Jorge Barahona Sotelo, abogado, en representación del Banco de Chile, en los autos caratulados "Banco de Chile con Ariztía", rol C-528-2026, a S.S. respetuosamente digo:
+
+Encontrándome dentro de plazo, en virtud del artículo 466 del Código de Procedimiento Civil, vengo en evacuar el traslado conferido por S.S. mediante resolución de fecha 8 de junio de 2026, respecto de las excepciones opuestas por la parte demandada a la presente ejecución, solicitando que éstas sean rechazadas en todas sus partes, con costas, de acuerdo a los antecedentes de hecho y fundamentos de Derecho que paso a exponer:
+
+Como primera cuestión, las excepciones opuestas se fundan en hechos e interpretaciones que, de conformidad a lo dispuesto en el artículo 1698 del Código Civil, corresponderá al ejecutado acreditar en su integridad.
+
+[... cuerpo con análisis por excepción ...]
+
+Por tanto,
+
+Solicito a S.S.: Tener por evacuado el traslado conferido a las excepciones opuestas y, en definitiva, rechazarlas, con costas, ordenando S.S. continuar con la ejecución.
+
+=== EJEMPLO 3: REPOSICIÓN CON OTROSÍES ===
+En lo principal: Desarchivo. Otrosí: Se oficie
+
+S.J.L en lo Civil de Santiago (27°)
+
+Jorge Barahona Sotelo, en representación del Banco de Chile, en los autos caratulados "Banco de Chile con Veas", causa rol C-7322-2026, a S.S. respetuosamente digo:
+
+Para efectos de interponer recurso de reposición en contra de la resolución de fecha 4 de junio de 2026, a folio 5, vengo en solicitar el desarchivo de la presente causa.
+
+Por tanto;
+
+Solicito a S.S.: Acceder a lo solicitado.
+
+Primer Otrosí: Que, por el presente acto vengo en interponer recurso de reposición en contra de la resolución de fecha 4 de junio de 2026, folio 5, por cuanto se archiva la presente causa. Ello, en virtud de los argumentos de hecho y de Derecho que paso a exponer:
+
+[... fundamentos ...]
+
+Por tanto,
+
+Sírvase S.S.: Tener por interpuesto recurso de reposición [...] y en su lugar, se deje sin efecto la resolución recurrida.
+
+Segundo Otrosí: [solicitud adicional]
+
+Por tanto,
+
+Solicito a S.S.: Acceder a lo solicitado.
+
+=== EJEMPLO 4: DEMANDA EJECUTIVA (mutuo hipotecario) — estructura de sumilla ===
+En lo principal: Demanda ejecutiva y solicita se despache mandamiento de ejecución y embargo. En el primer otrosí: Acompaña documentos y solicita su custodia. En el segundo otrosí: Señala bienes para la traba del embargo y designa depositario provisional. En el tercer otrosí: Acredita personería. En el cuarto otrosí: Téngase presente. En el quinto otrosí: Forma de notificación. En el sexto otrosí: Patrocinio y poder.
+
+S. J. L. en lo Civil de Santiago
+
+[Abogado], en su calidad de mandatario judicial y en representación, según se acreditará, del Banco de Chile, institución financiera del giro de su denominación, cuyo Gerente General es don Eduardo Ebensperger Orrego, ingeniero comercial, todos con domicilio para estos efectos en calle Ahumada N° 251, tercer piso, comuna de Santiago, Región Metropolitana, a S.S. con todo respeto digo:
+
+Vengo en deducir demanda ejecutiva en contra de [demandados] [...] todo de acuerdo a los antecedentes de hecho y fundamentos de derechos que paso a exponer:
+
+I.- Título ejecutivo y fecha de mora.
+[...]
+
+Por tanto, En mérito de lo expuesto, y de acuerdo a lo dispuesto en el artículo 434 y siguientes del Código de Procedimiento Civil, y demás normas legales pertinentes,
+
+Sírvase S.S. tener por deducida demanda ejecutiva [...] ordenar se despache mandamiento de ejecución y embargo [...] con costas.
+`;
+
   const estiloBase = `
 ESTILO Y ESTRUCTURA DEL ESTUDIO JORDÁN BARAHONA (obligatorio):
 
@@ -130,9 +206,8 @@ TIPOS DE ESCRITOS y su estructura típica:
 - Gestión preparatoria de desposeimiento: notificación al tercer poseedor de la finca hipotecada
 `;
 
-  const referenceSection = referenceTexts?.length
-    ? `\nEJEMPLOS DE ESTILO DEL ESTUDIO (escritos anteriores como referencia):\n${referenceTexts.join('\n---\n')}\n`
-    : '';
+  const referenceSection = `\nEJEMPLOS REALES DEL ESTUDIO (usar como referencia de estilo y estructura):\n${ejemplosReales}\n`
+    + (referenceTexts?.length ? `\nREFERENCIAS ADICIONALES DEL USUARIO:\n${referenceTexts.join('\n---\n')}\n` : '');
 
   const expedienteSection = rawExpedienteText
     ? `\nCONTENIDO DEL EXPEDIENTE (para contexto y datos):\n${rawExpedienteText.slice(0, 8000)}\n`
